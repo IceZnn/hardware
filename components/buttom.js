@@ -11,7 +11,7 @@ export default function Botao({txt, onPress}){
 
     )
 }
-
+//a
 const style = StyleSheet.create({
 
 btn:{
