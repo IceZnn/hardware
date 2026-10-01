@@ -2,32 +2,57 @@
   "expo": {
     "name": "hardware",
     "slug": "hardware",
+    "scheme": "hardware",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "A câmera é usada para tirar fotos nesta atividade.",
+        "NSMicrophoneUsageDescription": "O microfone é usado para gravar áudio nesta atividade.",
+        "NSLocationWhenInUseUsageDescription": "A localização é usada para demonstrar o GPS nesta atividade."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-audio",
-      "expo-status-bar"
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "O microfone é usado para gravar áudio nesta atividade."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "A câmera é usada para tirar fotos nesta atividade.",
+          "microphonePermission": "O microfone é usado para gravar áudio nesta atividade."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "A localização é usada para demonstrar o GPS nesta atividade."
+        }
+      ],
+      "expo-notifications",
+      "expo-status-bar",
+      "expo-router",
+      "expo-asset"
     ]
   }
 }
