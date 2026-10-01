@@ -90,14 +90,15 @@ export default function Audio() {
 	return (
 		<Screen title="Áudio">
 			<View style={screenStyles.body}>
-				<Text style={screenStyles.message}>Grave sua voz ou teste um dos sons abaixo.</Text>
-				<View style={styles.indicator}>
+				<Text style={styles.intro}>Grave uma fala curta ou escolha um efeito.</Text>
+				<View style={[styles.recorderPanel, recorderState.isRecording && styles.recorderPanelActive]}>
 					<View style={[styles.dot, recorderState.isRecording && styles.dotRecording]} />
-					<Text style={styles.state}>{recorderState.isRecording ? 'Gravando…' : 'Parado'}</Text>
+					<View style={styles.recorderCopy}>
+						<Text style={styles.recorderCaption}>MICROFONE</Text>
+						<Text style={styles.state}>{recorderState.isRecording ? 'Gravando' : 'Pronto para gravar'}</Text>
+					</View>
+					<Text style={styles.duration}>{formatDuration(recorderState.durationMillis)}</Text>
 				</View>
-				<Text style={styles.duration}>
-					{recorderState.isRecording ? `${Math.floor(recorderState.durationMillis / 1000)} s` : ' '}
-				</Text>
 				<View style={styles.actions}>
 					<View style={styles.action}>
 						<Botao txt="Gravar" disabled={recorderState.isRecording} onPress={startRecording} />
@@ -105,16 +106,17 @@ export default function Audio() {
 					<View style={styles.action}>
 						<Botao txt="Parar" secondary disabled={!recorderState.isRecording} onPress={stopRecording} />
 					</View>
-					<View style={styles.action}>
-						<Botao txt="Ouvir gravação" secondary disabled={!recordingUri || recorderState.isRecording} onPress={playRecording} />
-					</View>
 				</View>
+				<Botao txt="Ouvir minha gravação" secondary disabled={!recordingUri || recorderState.isRecording} onPress={playRecording} />
 				<View style={styles.presets}>
-					<Text style={styles.presetsTitle}>Efeitos prontos</Text>
+					<View style={styles.presetsHeading}>
+						<Text style={styles.presetsTitle}>Efeitos</Text>
+						<Text style={styles.presetsHint}>TOQUE PARA OUVIR</Text>
+					</View>
 					{presets.map((preset) => (
 						<Botao
 							key={preset.title}
-							txt={preset.title}
+							txt={`▶   ${preset.title}`}
 							secondary
 							disabled={recorderState.isRecording}
 							onPress={() => playPreset(preset)}
@@ -128,35 +130,65 @@ export default function Audio() {
 	);
 }
 
+function formatDuration(durationMillis) {
+	const totalSeconds = Math.floor(durationMillis / 1000);
+	const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+	const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+	return `${minutes}:${seconds}`;
+}
+
 const styles = StyleSheet.create({
-	indicator: {
-		minHeight: 86,
+	intro: {
+		color: '#53675E',
+		fontSize: 17,
+		lineHeight: 24,
+	},
+	recorderPanel: {
+		minHeight: 92,
+		paddingHorizontal: 18,
 		flexDirection: 'row',
 		alignItems: 'center',
-		justifyContent: 'center',
 		gap: 12,
-		borderRadius: 12,
+		borderWidth: 1,
+		borderColor: '#D3DED7',
+		borderRadius: 14,
 		backgroundColor: '#FFFFFF',
 	},
+	recorderPanelActive: {
+		borderColor: '#D56448',
+		backgroundColor: '#FFF4EF',
+	},
 	dot: {
-		width: 16,
-		height: 16,
-		borderRadius: 8,
+		width: 13,
+		height: 13,
+		borderRadius: 7,
 		backgroundColor: '#93A49D',
 	},
 	dotRecording: {
 		backgroundColor: '#C44938',
 	},
+	recorderCopy: {
+		flex: 1,
+		gap: 3,
+	},
+	recorderCaption: {
+		color: '#75857E',
+		fontSize: 10,
+		fontWeight: '800',
+		letterSpacing: 0.5,
+	},
 	state: {
-		color: '#173B32',
-		fontSize: 20,
+		color: '#19352F',
+		fontSize: 18,
 		fontWeight: '700',
 	},
 	duration: {
-		color: '#475C56',
-		minHeight: 22,
-		fontSize: 16,
-		textAlign: 'center',
+		minWidth: 58,
+		color: '#19352F',
+		fontSize: 21,
+		fontWeight: '700',
+		fontVariant: ['tabular-nums'],
+		textAlign: 'right',
 	},
 	actions: {
 		flexDirection: 'row',
@@ -167,17 +199,30 @@ const styles = StyleSheet.create({
 		flexGrow: 1,
 		flexBasis: 180,
 	},
-	message: {
-		color: '#126B5B',
-		fontSize: 16,
-		textAlign: 'center',
-	},
 	presets: {
 		gap: 10,
+		marginTop: 8,
+	},
+	presetsHeading: {
+		marginBottom: 2,
+		flexDirection: 'row',
+		alignItems: 'baseline',
+		justifyContent: 'space-between',
+	},
+	message: {
+		color: '#315D4F',
+		fontSize: 16,
+		textAlign: 'left',
+	},
+	presetsHint: {
+		color: '#75857E',
+		fontSize: 9,
+		fontWeight: '800',
+		letterSpacing: 0.45,
 	},
 	presetsTitle: {
-		color: '#173B32',
-		fontSize: 20,
+		color: '#19352F',
+		fontSize: 21,
 		fontWeight: '700',
 	},
 });

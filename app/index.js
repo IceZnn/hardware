@@ -4,11 +4,11 @@ import { ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'react-nati
 import * as Haptics from 'expo-haptics';
 
 const features = [
-	{ title: 'Câmera', icon: '📷', route: '/camera', color: '#D9EEE7' },
-	{ title: 'Acelerômetro', icon: '◉', route: '/acelerometro', color: '#F5E9C8' },
-	{ title: 'GPS', icon: '⌖', route: '/gps', color: '#DCEAF4' },
-	{ title: 'Áudio', icon: '♫', route: '/audio', color: '#F4DFD8' },
-	{ title: 'Notificação', icon: '♧', route: '/notification', color: '#E9E2F1' },
+	{ title: 'Câmera', detail: 'Prévia e captura', icon: '◉', route: '/camera', color: '#E4EFE9' },
+	{ title: 'Acelerômetro', detail: 'Inclinação ao vivo', icon: '⌁', route: '/acelerometro', color: '#F4EBD3' },
+	{ title: 'GPS', detail: 'Sua posição atual', icon: '⌖', route: '/gps', color: '#E2EDF0' },
+	{ title: 'Áudio', detail: 'Grave e reproduza', icon: '♫', route: '/audio', color: '#F3E4DF' },
+	{ title: 'Notificação', detail: 'Lembrete em 5 s', icon: '◷', route: '/notification', color: '#E9E9DF' },
 ];
 
 export default function Home() {
@@ -22,23 +22,35 @@ export default function Home() {
 			<StatusBar style="dark" />
 			<ScrollView contentContainerStyle={styles.content}>
 				<View style={styles.intro}>
-					<Text style={styles.eyebrow}>PROJETO DE MOBILE</Text>
-					<Text style={styles.title}>Hardware</Text>
-					<Text style={styles.description}>
-						Use a câmera, incline o tablet e teste os sensores.
-					</Text>
+					<View style={styles.kicker}>
+						<View style={styles.kickerDot} />
+						<Text style={styles.eyebrow}>BANCADA MOBILE</Text>
+					</View>
+					<View style={styles.titleRow}>
+						<Text style={styles.title}>Hardware</Text>
+						<Text style={styles.count}>05 TESTES</Text>
+					</View>
+					<Text style={styles.description}>Câmera, sensores e áudio do tablet.</Text>
 				</View>
 				<View style={styles.grid}>
-					{features.map((feature) => (
+					{features.map((feature, index) => (
 						<TouchableOpacity
 							key={feature.route}
 							accessibilityRole="button"
 							onPress={() => openFeature(feature.route)}
 							style={[styles.card, { backgroundColor: feature.color }]}
 						>
-							<Text style={styles.icon}>{feature.icon}</Text>
-							<Text style={styles.cardTitle}>{feature.title}</Text>
-							<Text style={styles.cardArrow}>Abrir  ›</Text>
+							<View style={styles.cardTop}>
+								<View style={styles.iconTile}><Text style={styles.icon}>{feature.icon}</Text></View>
+								<Text style={styles.cardNumber}>{String(index + 1).padStart(2, '0')}</Text>
+							</View>
+							<View style={styles.cardBottom}>
+								<View style={styles.cardCopy}>
+									<Text style={styles.cardTitle}>{feature.title}</Text>
+									<Text style={styles.cardDetail}>{feature.detail}</Text>
+								</View>
+								<View style={styles.cardArrow}><Text style={styles.arrowText}>↗</Text></View>
+							</View>
 						</TouchableOpacity>
 					))}
 				</View>
@@ -50,66 +62,131 @@ export default function Home() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#F5F8F6',
+		backgroundColor: '#F1F4F0',
 	},
 	content: {
 		flexGrow: 1,
 		alignItems: 'center',
-		paddingHorizontal: 28,
-		paddingTop: 42,
-		paddingBottom: 32,
+		paddingHorizontal: 24,
+		paddingTop: 34,
+		paddingBottom: 36,
 	},
 	intro: {
 		width: '100%',
-		maxWidth: 900,
-		marginBottom: 30,
+		maxWidth: 940,
+		marginBottom: 26,
+	},
+	kicker: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		gap: 9,
+	},
+	kickerDot: {
+		width: 8,
+		height: 8,
+		borderRadius: 4,
+		backgroundColor: '#D26A45',
 	},
 	eyebrow: {
 		color: '#126B5B',
-		fontSize: 13,
+		fontSize: 12,
 		fontWeight: '800',
-		letterSpacing: 1,
+		letterSpacing: 0.6,
+	},
+	titleRow: {
+		marginTop: 8,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
 	},
 	title: {
-		color: '#173B32',
-		fontSize: 42,
+		color: '#19352F',
+		fontSize: 40,
 		fontWeight: '800',
-		marginTop: 8,
+	},
+	count: {
+		color: '#6A7D76',
+		fontSize: 12,
+		fontWeight: '800',
+		letterSpacing: 0.4,
 	},
 	description: {
 		maxWidth: 560,
 		color: '#475C56',
-		fontSize: 19,
-		lineHeight: 27,
-		marginTop: 8,
+		fontSize: 17,
+		lineHeight: 24,
+		marginTop: 4,
 	},
 	grid: {
 		width: '100%',
-		maxWidth: 900,
+		maxWidth: 940,
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		gap: 16,
 	},
 	card: {
 		flexGrow: 1,
-		flexBasis: 220,
-		minHeight: 168,
-		borderRadius: 12,
-		padding: 22,
+		flexBasis: 245,
+		minHeight: 178,
+		borderRadius: 14,
+		padding: 18,
+		borderWidth: 1,
+		borderColor: 'rgba(25, 53, 47, 0.07)',
 		justifyContent: 'space-between',
 	},
+	cardTop: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+	},
+	iconTile: {
+		width: 48,
+		height: 48,
+		alignItems: 'center',
+		justifyContent: 'center',
+		borderRadius: 14,
+		backgroundColor: 'rgba(255, 255, 255, 0.68)',
+	},
 	icon: {
-		color: '#173B32',
-		fontSize: 32,
+		color: '#19352F',
+		fontSize: 27,
+	},
+	cardNumber: {
+		color: 'rgba(25, 53, 47, 0.5)',
+		fontSize: 12,
+		fontWeight: '800',
+		fontVariant: ['tabular-nums'],
+	},
+	cardBottom: {
+		flexDirection: 'row',
+		alignItems: 'flex-end',
+		justifyContent: 'space-between',
+		gap: 10,
+	},
+	cardCopy: {
+		flex: 1,
 	},
 	cardTitle: {
-		color: '#173B32',
-		fontSize: 22,
+		color: '#19352F',
+		fontSize: 20,
 		fontWeight: '800',
 	},
+	cardDetail: {
+		marginTop: 4,
+		color: '#51645D',
+		fontSize: 14,
+	},
 	cardArrow: {
+		width: 34,
+		height: 34,
+		alignItems: 'center',
+		justifyContent: 'center',
+		borderRadius: 17,
+		backgroundColor: 'rgba(255, 255, 255, 0.72)',
+	},
+	arrowText: {
 		color: '#126B5B',
-		fontSize: 16,
+		fontSize: 20,
 		fontWeight: '700',
 	},
 });

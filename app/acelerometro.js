@@ -50,7 +50,7 @@ export default function Acelerometro() {
 	return (
 		<Screen title="Acelerômetro">
 			<View style={screenStyles.body}>
-				<Text style={screenStyles.message}>Incline o tablet para mover a bolinha e mudar os valores.</Text>
+				<Text style={screenStyles.message}>Incline o tablet e observe os valores e a bolinha.</Text>
 				<View
 					onLayout={(event) => setBoardWidth(event.nativeEvent.layout.width)}
 					style={[styles.board, { width: Math.min(boardWidth, size), height: Math.min(boardWidth, size) }]}
@@ -83,10 +83,9 @@ const styles = StyleSheet.create({
 		maxHeight: 420,
 		alignSelf: 'center',
 		position: 'relative',
-		borderWidth: 2,
-		borderColor: '#A9C7BC',
-		borderRadius: 16,
-		backgroundColor: '#E7F0EC',
+		borderWidth: 3,
+		borderColor: '#24352E',
+		backgroundColor: '#DDDDDD',
 	},
 	ball: {
 		position: 'absolute',

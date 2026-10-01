@@ -71,8 +71,8 @@ function Coordinate({ label, value }) {
 
 const styles = StyleSheet.create({
 	data: {
-		borderRadius: 12,
 		paddingHorizontal: 18,
+		borderRadius: 12,
 		backgroundColor: '#FFFFFF',
 	},
 	row: {

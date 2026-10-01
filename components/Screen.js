@@ -27,24 +27,25 @@ export default function Screen({ title, children }) {
 export const screenStyles = StyleSheet.create({
   body: {
     width: '100%',
-    maxWidth: 760,
+    maxWidth: 820,
     alignSelf: 'center',
-    gap: 18,
+    gap: 20,
   },
   message: {
     color: '#475C56',
-    fontSize: 18,
-    lineHeight: 26,
-    textAlign: 'center',
+    fontSize: 17,
+    lineHeight: 25,
+    textAlign: 'left',
   },
   error: {
-    padding: 14,
-    borderRadius: 10,
+    padding: 15,
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#C65F4F',
     backgroundColor: '#FCE9E5',
     color: '#9B3124',
     fontSize: 16,
     lineHeight: 23,
-    textAlign: 'center',
   },
 });
 

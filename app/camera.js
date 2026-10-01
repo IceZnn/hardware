@@ -29,12 +29,10 @@ export default function Camera() {
 		<Screen title="Câmera">
 			<View style={screenStyles.body}>
 				{!permission?.granted ? (
-					<>
-						<Text style={screenStyles.message}>
-							Libere a câmera para abrir a prévia e tirar uma foto.
-						</Text>
+					<View style={styles.permissionPanel}>
+						<Text style={screenStyles.message}>Libere a câmera para abrir a prévia e tirar uma foto.</Text>
 						<Botao txt="Liberar câmera" onPress={requestPermission} />
-					</>
+					</View>
 				) : (
 					<>
 						<View style={[styles.preview, { height: previewHeight }]}>
@@ -80,8 +78,13 @@ const styles = StyleSheet.create({
 		maxWidth: 720,
 		alignSelf: 'center',
 		overflow: 'hidden',
-		borderRadius: 12,
+		borderRadius: 10,
 		backgroundColor: '#13251F',
+	},
+	permissionPanel: {
+		width: '100%',
+		alignItems: 'center',
+		gap: 16,
 	},
 	actions: {
 		flexDirection: 'row',
